@@ -3,7 +3,7 @@
 @section('main_content')
     <section>
         <div class="container">
-            <h1>Crea un nuovo fumetto</h1>
+            <h1>Modifica fumetto: {{ $comic->name }}</h1>
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -15,36 +15,39 @@
                 </div>
             @endif
 
-            <!-- Create form  -->
-            <form action="{{ route('comics.store') }}" method="post">
+           <!-- Edit form -->
+            <form action=" {{ route('comics.update', [ 
+                'comic' => $comic->id 
+            ]) }}" method="post">
+
                 @csrf
-                @method('POST')
+                @method('PUT')
 
                 <div class="form-group">
                     <label for="name">Nome</label>
-                    <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}">
+                    <input type="text" class="form-control" name="name" id="name" value="{{ $comic->name }}">
                 </div>
 
                 <div class="form-group">
                     <label for="description">Descrizione</label>
-                    <textarea name="description" class="form-control" id="description" cols="30" rows="10">{{ old('description') }}</textarea>
+                    <textarea name="description" class="form-control" id="description" cols="30" rows="10">{{ $comic->description }}</textarea>
                 </div>
 
                 <div class="form-group">
                     <label for="type">Genere</label>
-                    <input type="text" class="form-control" name="genre" id="genre" value="{{ old('genre') }}">
+                    <input type="text" class="form-control" name="genre" id="genre" value="{{ $comic->genre }}">
                 </div>
 
                 <div class="form-group">
                     <label for="image">Image</label>
-                    <input type="text" class="form-control" name="image" id="image" value="{{ old('image') }}">
+                    <input type="text" class="form-control" name="image" id="image" value="{{ $comic->image }}">
+                    <img style="max-height:150px" src="{{ $comic->image }}" alt="">
                 </div>
 
-                
 
-                <input type="submit" class="btn btn-primary" value="Salva nuovo fumetto">
+                <input type="submit" class="btn btn-primary" value="Modifica">
             </form>
-            <!-- End create form  -->
+            <!-- End Edit form -->
         </div>
     </section>
 @endsection
