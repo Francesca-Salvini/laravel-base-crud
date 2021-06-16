@@ -43,11 +43,7 @@ class ComicController extends Controller
     public function store(Request $request)
     {
 
-        $request->validate([
-            'name' => 'required|min:3|max:50',
-            'genre' => 'required|max:20',
-            'image' => 'required|max:255',
-        ]);
+        $request->validate($this->getValidationRules());
 
         $form_data = $request->all();
 
@@ -106,12 +102,8 @@ class ComicController extends Controller
     public function update(Request $request, $id)
     {
 
-        $request->validate([
-            'name' => 'required|min:3|max:50',
-            'genre' => 'required|max:20',
-            'image' => 'required|max:255',
-        ]);
-        
+        $request->validate($this->getValidationRules());
+
         $form_data = $request->all();
 
         $comic_to_modify = Comic::find($id);
@@ -129,5 +121,16 @@ class ComicController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    private function getValidationRules() {
+        $validation_rules = 
+            [
+                'name' => 'required|min:3|max:50',
+                'genre' => 'required|max:20',
+                'image' => 'required|max:255',
+            ];
+    
+        return $validation_rules;
     }
 }
